@@ -6,6 +6,7 @@ import javax.persistence.*;
 //Esta clase se comportara como una clase de la base de datos
 @Entity
 @Table(name = "productos")
+//Tabla
 public class Producto {
 
     //Es importante usar objetos NO PRIMITIVOS
@@ -16,6 +17,7 @@ public class Producto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     //Como le cambiamos el nombre le especificamos que columna es la que vamos a buscar
     @Column(name = "id_producto")
+    //Tipo de variable de la clase primaria
     private Integer idProducto;
 
     //Si el nombre de la variable es igual a la columna de la tabla
