@@ -2,6 +2,7 @@ package com.digrutt.course_spring.persistence.entity;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 //Esta referenciada a una tabla de la base de datos
 @Entity
@@ -26,6 +27,13 @@ public class Compras {
 
     private String comentario;
     private String estado;
+
+    @ManyToOne
+    @JoinColumn(name = "id_cliente", insertable = false, updatable = false)
+    private Clientes cliente;
+
+    @OneToMany(mappedBy = "producto")
+    private List<ComprasProductos> productosList;
 
     //Getter Setter
     public Integer getIdCompra() {
