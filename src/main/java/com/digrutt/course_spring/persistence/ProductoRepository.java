@@ -1,9 +1,13 @@
 package com.digrutt.course_spring.persistence;
 
+import com.digrutt.course_spring.domain.Product;
+import com.digrutt.course_spring.domain.repository.ProductRepository;
 import com.digrutt.course_spring.persistence.crud.ProductoCrudRepository;
 import com.digrutt.course_spring.persistence.entity.Producto;
+import com.digrutt.course_spring.persistence.mapper.ProductMapper;
 import org.springframework.stereotype.Repository;
 
+import java.awt.desktop.PreferencesEvent;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,31 +19,45 @@ indicandole que es un componente de Spring pero queda mejor @Repository
 @Repository: le indicamos a la clase que es la encarga de interactuar con la base de datos.
 */
 @Repository
-public class ProductoRepository {
+/*Para orientar el producto repository al dominio lo primero que tenemos que hacer
+* es implementar la interfaz*/
+/*No esto evitamos que nuestro proyecto se acomple a una base de datos, */
+public class ProductoRepository implements ProductRepository {
     private ProductoCrudRepository productoCrudRepository;
+    private ProductMapper mapper;
 
-    public List<Producto> getAll(){
-        return (List<Producto>) productoCrudRepository.findAll();
+    @Override
+    public List<Product> getAll(){
+        List<Producto> produc = (List<Producto>) productoCrudRepository.findAll();
+        return mapper.toProducts(produc);
     }
 
-    public List<Producto> getByCategoria(int idCategoria){
-        return productoCrudRepository.findByIdCategoriaOrderByNombreAsc(idCategoria);
+    @Override
+    public Optional<List<Product>> getByCategory(int categoryId){
+        List<Producto> productos = productoCrudRepository.findByIdCategoriaOrderByNombreAsc(categoryId);
+        return Optional.of(mapper.toProducts(productos));
     }
 
-    public Optional<List<Producto>> getEscasos(int cantidad,boolean estado){
-        return productoCrudRepository.findByCantidadStockLessThanAndEstado(cantidad,estado);
+    @Override
+    public Optional<List<Product>> getScarseProducts(int quantity) {
+        Optional<List<Producto>> productos = productoCrudRepository.findByCantidadStockLessThanAndEstado(quantity,true);
+        return productos.map( prods -> mapper.toProducts(prods) );
     }
 
-    public Optional<Producto> getProducto(int idProducto){
-        return productoCrudRepository.findById(idProducto);
+    @Override
+    public Optional<Product> getProduct(int productId) {
+        return productoCrudRepository.findById(productId).map(product -> mapper.toProduct(product));
     }
 
-    //Guardar
-    public Producto save(Producto producto){
-        return productoCrudRepository.save(producto);
+    @Override
+    public Product save(Product product) {
+        Producto producto = mapper.toProducto(product);
+        return mapper.toProduct(productoCrudRepository.save(producto));
     }
+
     //Delete
-    public void delete(int idProducto){
-        productoCrudRepository.deleteById(idProducto);
+    @Override
+    public void delete(int productId){
+        productoCrudRepository.deleteById(productId);
     }
 }
