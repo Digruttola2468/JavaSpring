@@ -25,6 +25,6 @@ public interface CategoryMapper {
     //al mappings anterior
     @InheritInverseConfiguration
     //Le especificamos al mappign que NO usaremos la variable productos del Entity
-    @Mapping(target = "productos", ignore = true)
+    //@Mapping(target = "productos", ignore = true)
     Categorias toCategoria(Category category);
 }

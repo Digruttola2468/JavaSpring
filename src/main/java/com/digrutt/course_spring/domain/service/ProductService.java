@@ -20,6 +20,7 @@ public class ProductService {
 
     /*Esta clase ProductService sirve como un intermediador entre el controlador y la capa de Repositorio*/
     /*Estamos trabajando en terminos del dominio y el servicio desconoce de esa operacion ya sea por ejemplo save()*/
+
     public List<Product> getAll(){
         return productRepository.getAll();
     }
@@ -28,14 +29,15 @@ public class ProductService {
         return productRepository.getProduct(productId);
     }
 
-    Optional<List<Product>> getByCategory(int categoryId){
+    public Optional<List<Product>> getByCategory(int categoryId){
         return productRepository.getByCategory(categoryId);
     }
 
-    Product save(Product product){
+    public Product save(Product product){
         return productRepository.save(product);
     }
-    boolean delete(int productId){
+
+    public boolean delete(int productId){
         //El map se ejecuta si el product existe
         return getProduct(productId).map(product -> {
             productRepository.delete(productId);
