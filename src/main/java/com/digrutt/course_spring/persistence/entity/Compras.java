@@ -9,6 +9,7 @@ import java.util.List;
 //Como el nombre de la clase no es igual a la de base de datos colocamos @Table
 @Table(name = "compras")
 public class Compras {
+
     @Id
     //Le especificamos que es un ID unica (llave primaria)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,8 +33,24 @@ public class Compras {
     @JoinColumn(name = "id_cliente", insertable = false, updatable = false)
     private Clientes cliente;
 
-    /*@OneToMany(mappedBy = "producto")
-    private List<ComprasProductos> productosList;*/
+    @OneToMany(mappedBy = "compra", cascade = {CascadeType.ALL})
+    private List<ComprasProducto> productosList;
+
+    public Clientes getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Clientes cliente) {
+        this.cliente = cliente;
+    }
+
+    public List<ComprasProducto> getProductosList() {
+        return productosList;
+    }
+
+    public void setProductosList(List<ComprasProducto> productosList) {
+        this.productosList = productosList;
+    }
 
     //Getter Setter
     public Integer getIdCompra() {
