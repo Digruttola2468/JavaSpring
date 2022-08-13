@@ -5,6 +5,7 @@ import com.digrutt.course_spring.domain.repository.ProductRepository;
 import com.digrutt.course_spring.persistence.crud.ProductoCrudRepository;
 import com.digrutt.course_spring.persistence.entity.Producto;
 import com.digrutt.course_spring.persistence.mapper.ProductMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.awt.desktop.PreferencesEvent;
@@ -23,7 +24,15 @@ indicandole que es un componente de Spring pero queda mejor @Repository
 * es implementar la interfaz*/
 /*No esto evitamos que nuestro proyecto se acomple a una base de datos, */
 public class ProductoRepository implements ProductRepository {
+    //Estas interfaces no estan inicializadas por ende si queremos realizar un accion con ellas
+    //Nos devuelve un NullPointerException
+    //La solucion para esto es que Spring se encargue de inicializarlas
+    @Autowired
     private ProductoCrudRepository productoCrudRepository;
+
+    //Es obligatorio saber que esa interfaz que Spring va a inicializar (ProductMapper.class)
+    //sea parte tambien de un componente de Spring
+    @Autowired
     private ProductMapper mapper;
 
     @Override
