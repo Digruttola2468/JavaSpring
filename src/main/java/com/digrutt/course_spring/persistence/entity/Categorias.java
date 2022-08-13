@@ -13,6 +13,7 @@ public class Categorias {
     private Integer idCategoria;
 
     private String descripcion;
+    private boolean estado;
 
     @OneToMany(mappedBy = "categoria")
     private List<Producto> productos;
@@ -41,5 +42,4 @@ public class Categorias {
         this.estado = estado;
     }
 
-    private boolean estado;
 }
