@@ -7,6 +7,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface CategoryMapper {
     //Convirtiendo categorias dentro de category
@@ -19,6 +21,7 @@ public interface CategoryMapper {
             @Mapping(source = "estado", target = "active")
     })
     Category toCategory(Categorias categoria);
+    List<Category> toCategorys(List<Categorias> categoriasList);
 
     //Conversion externa
     //Indica que la conversion que vamos a realizar , es inversa
