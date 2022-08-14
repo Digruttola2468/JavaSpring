@@ -3,9 +3,11 @@ package com.digrutt.course_spring.web.secutiry;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
+@Component
 public class JWTUtil {
 
     //Esta llave deberia ser mas compleja
